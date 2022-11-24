@@ -17,5 +17,17 @@ public class Service implements ServiceImpl {
     public List<StudentInfo> getStudents() {
         return studentList;
     }
+
+    @Override
+    public StudentInfo getStudents(int StudentId){
+        StudentInfo stud= null;
+        for (StudentInfo studentinfo: studentList){
+            if (studentinfo.getStudentId()==StudentId){
+                stud=studentinfo;
+                break;
+            }
+        }
+        return stud;
+    }
 }
 

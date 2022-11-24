@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ServiceImpl {
     List<StudentInfo> getStudents();
+   StudentInfo getStudents(int StudentId);
 }
