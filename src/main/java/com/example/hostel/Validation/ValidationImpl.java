@@ -18,8 +18,8 @@ public class ValidationImpl implements Validator {
         return Rooms>0;
 
     }
-    public boolean addressValidator(String address) {
-        return address.matches("[A-Za-z]{3,20}$");
-    }
+//    public boolean addressValidator(String address) {
+//        return address.matches("[A-Za-z]{3,20}$");
+//    }
 
 }
