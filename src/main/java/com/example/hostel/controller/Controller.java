@@ -2,6 +2,8 @@ package com.example.hostel.controller;
 
 import com.example.hostel.entity.StudentInfo;
 import com.example.hostel.service.ServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,13 +20,17 @@ public class Controller {
     @Autowired
     public ServiceImpl service;
 
-
+    Logger logger =LoggerFactory.getLogger(Controller.class);
     @PostMapping("student/add")
     private String add(@RequestBody StudentInfo studentInfo) throws Exception{
         return service.addStudents(studentInfo);
     }
     @GetMapping("/student")
     private List<StudentInfo> viewAll(){
+        logger.info("[viewAll] info message");
+        logger.warn("[viewAll] warn message");
+        logger.error("[viewAll] error message");
+        logger.trace("[viewAll] trace message");
         return service.displayAll();
     }
     @GetMapping("/studentInfo/{studentId}")
