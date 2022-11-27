@@ -1,7 +1,10 @@
 package com.example.hostel.service;
 
+import com.example.hostel.Validation.Validator;
 import com.example.hostel.entity.StudentInfo;
-import com.example.hostel.service.ServiceImpl;
+import com.example.hostel.exception.InvalidEntryException;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,13 +12,43 @@ import java.util.List;
 public class Service implements ServiceImpl {
     List<StudentInfo> studentList= new ArrayList<>();
     public Service(){
-        studentList.add(new StudentInfo(10,"Adarsh",101));
-        studentList.add(new StudentInfo(11,"Abhilash",102));
-        studentList.add(new StudentInfo(12,"Mahesh",103));
+
     }
     @Override
-    public List<StudentInfo> getStudents() {
+    public List<StudentInfo> displayAll() {
         return studentList;
+    }
+
+    StudentInfo student = new StudentInfo();
+    @Autowired
+    Validator validation ;
+
+    public String addStudents(StudentInfo student) throws Exception{
+        StudentInfo studentDetails = new StudentInfo();
+
+        try {
+            if (!validation.IdValidator(student.getStudentId()))
+                throw new InvalidEntryException("Enter Valid Id");
+            studentDetails.setStudentId(student.getStudentId());
+
+            if (!validation.nameValidator(student.getStudentName()))
+                throw new InvalidEntryException("Enter Valid Name");
+            studentDetails.setStudentName(student.getStudentName());
+
+            if (!validation.roomsValidator(student.getRoomNo()))
+                throw new InvalidEntryException("Enter Valid Room Number");
+            studentDetails.setRoomNo(student.getRoomNo());
+
+            if (!validation.addressValidator(student.getAddress()))
+                throw new InvalidEntryException("Enter Valid Address");
+            studentDetails.setAddress(student.getAddress());
+
+        }catch (InvalidEntryException e){
+            return e.getMessage();
+        }
+        studentList.add(studentDetails);
+        return "Student added";
+
     }
 
     @Override

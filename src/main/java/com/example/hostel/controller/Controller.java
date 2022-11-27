@@ -17,23 +17,29 @@ public class Controller {
 
     @Autowired
     public ServiceImpl service;
-    @GetMapping("/student")
-    private List<StudentInfo> getStudents(){
-        return this.service.getStudents();
+
+
+    @PostMapping("student/add")
+    private String add(@RequestBody StudentInfo studentInfo) throws Exception{
+        return service.addStudents(studentInfo);
     }
-    @PostMapping("/studentInfo/{studentId}")
+    @GetMapping("/student")
+    private List<StudentInfo> viewAll(){
+        return service.displayAll();
+    }
+    @GetMapping("/studentInfo/{studentId}")
     public StudentInfo getStudents(@PathVariable int studentId){
-        return this.service.getStudents(studentId);
+        return service.getStudents(studentId);
     }
 
     @PutMapping("/student/{StudentId}")
-    public StudentInfo updateStudent(@PathVariable (value="StudentId")int StudentId, @RequestBody StudentInfo student ) {
-        return this.service.updateStudent(StudentId, student);
+    public StudentInfo updateStudent(@PathVariable int StudentId, @RequestBody StudentInfo student ) {
+        return service.updateStudent(StudentId, student);
     }
 
     @DeleteMapping("/student/{StudentId}")
     public StudentInfo deleteStudent(@PathVariable  String StudentId) {
-        return this.service.deleteStudent(Integer.parseInt(StudentId));
+        return service.deleteStudent(Integer.parseInt(StudentId));
     }
 
 }

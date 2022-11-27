@@ -5,6 +5,15 @@ public class StudentInfo {
     private int StudentId;
     private String StudentName;
     private int RoomNo;
+    private String Address;
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
+    }
 
     public int getStudentId() {
         return StudentId;
@@ -30,12 +39,14 @@ public class StudentInfo {
         RoomNo = roomNo;
     }
 
-    public StudentInfo(int studentId, String studentName, int roomNo) {
+    public StudentInfo(int studentId, String studentName, int roomNo, String address) {
         StudentId = studentId;
         StudentName = studentName;
         RoomNo = roomNo;
+        Address = address;
     }
-    public StudentInfo(){
+
+    public StudentInfo() {
     }
 
     @Override
@@ -44,10 +55,7 @@ public class StudentInfo {
                 "StudentId=" + StudentId +
                 ", StudentName='" + StudentName + '\'' +
                 ", RoomNo=" + RoomNo +
+                ", Address='" + Address + '\'' +
                 '}';
     }
 }
-
-
-
-
