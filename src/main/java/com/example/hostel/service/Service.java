@@ -3,6 +3,7 @@ package com.example.hostel.service;
 import com.example.hostel.Validation.Validator;
 import com.example.hostel.entity.StudentInfo;
 import com.example.hostel.exception.InvalidEntryException;
+import com.example.hostel.exception.StudentIdNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Service implements ServiceImpl {
     @Autowired
     Validator validation ;
 
-    public String addStudents(StudentInfo student) throws Exception{
+    public String addStudents(StudentInfo student) throws Exception {
         StudentInfo studentDetails = new StudentInfo();
 
         try {
@@ -35,6 +36,7 @@ public class Service implements ServiceImpl {
                 throw new InvalidEntryException("Enter Valid Name");
             studentDetails.setStudentName(student.getStudentName());
 
+
             if (!validation.roomsValidator(student.getRoomNo()))
                 throw new InvalidEntryException("Enter Valid Room Number");
             studentDetails.setRoomNo(student.getRoomNo());
@@ -43,53 +45,67 @@ public class Service implements ServiceImpl {
                 throw new InvalidEntryException("Enter Valid Address");
             studentDetails.setAddress(student.getAddress());
 
-        }catch (InvalidEntryException e){
+            if (specialCheck(student.getStudentId()))
+                throw new StudentIdNotFoundException("Student ID already present");
+
+        } catch (InvalidEntryException e) {
+            return e.getMessage();
+        } catch (StudentIdNotFoundException e) {
             return e.getMessage();
         }
-        studentList.add(studentDetails);
-        return "Student added";
+            studentList.add(studentDetails);
+            return "Student added";
 
-    }
-
-    @Override
-    public StudentInfo getStudents(int StudentId){
-        StudentInfo stud= null;
-        for (StudentInfo studentinfo: studentList){
-            if (studentinfo.getStudentId()==StudentId){
-                stud=studentinfo;
-                break;
-            }
         }
-        return stud;
-    }
 
-
-
-    @Override
-    public StudentInfo deleteStudent(int StudentId) {
-        StudentInfo st = null;
-        for (StudentInfo student : studentList) {
-            if (student.getStudentId() == StudentId) {
-                st = student ;
-                studentList.remove(student);
-                break;
+        @Override
+        public StudentInfo getStudents(int StudentId){
+            StudentInfo stud = null;
+            for (StudentInfo studentinfo : studentList) {
+                if (studentinfo.getStudentId() == StudentId) {
+                    stud = studentinfo;
+                    break;
+                }
             }
+            return stud;
         }
-        return st;
-    }
 
 
-    public StudentInfo updateStudent(int StudentId, StudentInfo student) {
-        StudentInfo s = null;
-        for (StudentInfo student1 : studentList) {
-            if (student1.getStudentId() == StudentId) {
-                student1.setStudentName(student.getStudentName());
-                student1.setRoomNo(student.getRoomNo());
-                s = student1;
-                break;
+
+        @Override
+        public StudentInfo deleteStudent (int StudentId){
+            StudentInfo st = null;
+            for (StudentInfo student : studentList) {
+                if (student.getStudentId() == StudentId) {
+                    st = student;
+                    studentList.remove(student);
+                    break;
+                }
             }
+            return st;
         }
-        return s;
+
+
+
+        public StudentInfo updateStudent ( int StudentId, StudentInfo student){
+            StudentInfo s = null;
+            for (StudentInfo student1 : studentList) {
+                if (student1.getStudentId() == StudentId) {
+                    student1.setStudentName(student.getStudentName());
+                    student1.setRoomNo(student.getRoomNo());
+                    s = student1;
+                    break;
+                }
+            }
+            return s;
+        }
+
+    public boolean specialCheck(int studentId) {
+        for (StudentInfo student2 : displayAll()) {
+            if (student2.getStudentId() == studentId)
+                return true;
+        }
+        return false;
     }
 
 }

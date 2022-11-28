@@ -6,6 +6,7 @@ public interface Validator {
 
           public boolean IdValidator(Integer StudentId);
         public boolean nameValidator(String StudentName);
+
         public boolean roomsValidator(Integer RoomNo);
        public boolean addressValidator(String Address);
 

@@ -14,6 +14,7 @@ public class ValidationImpl implements Validator {
     public boolean nameValidator(String StudentName) {
         return StudentName.length() >= 4;
     }
+
     @Override
     public boolean roomsValidator(Integer RoomNo) {
         return RoomNo>0;
