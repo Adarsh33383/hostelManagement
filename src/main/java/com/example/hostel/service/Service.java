@@ -26,6 +26,7 @@ public class Service implements ServiceImpl {
     public String addStudents(StudentInfo student) throws Exception{
         StudentInfo studentDetails = new StudentInfo();
 
+
         try {
             if (!validation.IdValidator(student.getStudentId()))
                 throw new InvalidEntryException("Enter Valid Id");
@@ -85,6 +86,7 @@ public class Service implements ServiceImpl {
             if (student1.getStudentId() == StudentId) {
                 student1.setStudentName(student.getStudentName());
                 student1.setRoomNo(student.getRoomNo());
+                student1.setAddress(student.getAddress());
                 s = student1;
                 break;
             }
