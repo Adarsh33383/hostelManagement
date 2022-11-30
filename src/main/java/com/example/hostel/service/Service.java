@@ -87,13 +87,13 @@ public class Service implements ServiceImpl {
 
     @Override
     public String deleteStudentInfo(int StudentId) {
-        StudentInfo st = null;
         for (StudentInfo student : studentList) {
             if (student.getStudentId() == StudentId) {
-                st = student ;
                 studentList.remove(student);
                 break;
             }
+            else
+                throw new InvalidEntryException("Invalid StudentId");
         }
         return "Successfully deleted ";
     }
