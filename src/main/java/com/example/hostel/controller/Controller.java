@@ -43,16 +43,17 @@ public class Controller {
         return service.getStudents(roomNo);
     }
 
-    @PutMapping("/student/{StudentId}")
-    public StudentInfo updateStudent(@PathVariable int StudentId, @RequestBody StudentInfo student ) {
+    @DeleteMapping("/student/delete/{StudentId}")
+    public String deleteStudentInfo(@PathVariable  String StudentId) {
+        logger.info("Deleting student data");
+        return service.deleteStudentInfo(Integer.parseInt(StudentId));
+    }
+    @PutMapping("/student/update/{StudentId}")
+    public String updateStudentInfo(@PathVariable int StudentId, @RequestBody StudentInfo student ) {
         logger.info("Updating student data");
-        return service.updateStudent(StudentId, student);
+        return service.updateStudentInfo(StudentId, student);
     }
 
-    @DeleteMapping("/student/{StudentId}")
-    public StudentInfo deleteStudent(@PathVariable  String StudentId) {
-        logger.info("Deleting student data");
-        return service.deleteStudent(Integer.parseInt(StudentId));
-    }
+
 
 }
