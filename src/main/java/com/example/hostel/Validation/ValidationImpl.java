@@ -5,28 +5,33 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ValidationImpl implements Validator {
-        Service service = new Service();
+    Service service = new Service();
+
     @Override
-    public boolean IdValidator(Integer StudentId) {
-        return StudentId>0;
+    public boolean idValidator(int StudentId) {
+        return StudentId > 0;
     }
+
     @Override
     public boolean nameValidator(String StudentName) {
-        return StudentName.length() >= 4;
+        return StudentName.length() >= 3;
     }
 
     @Override
-    public boolean roomsValidator(Integer RoomNo) {
-        return RoomNo>0;
+    public boolean roomsValidator(int RoomNo) {
+        return RoomNo > 0;
 
     }
 
     @Override
-//    public boolean addressValidator(String Address) {
-//        return false;
-//    }
     public boolean addressValidator(String address) {
         return address.matches("[A-Za-z]{3,20}$");
+    }
+
+    @Override
+    public boolean numberValidator(long number) {
+        String numStr = String.valueOf(number);
+        return numStr.length() == 10;
     }
 
 }
