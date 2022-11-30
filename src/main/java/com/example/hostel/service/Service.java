@@ -103,9 +103,10 @@ public class Service implements ServiceImpl {
 
         for (StudentInfo student1 : studentList) {
             if (student1.getStudentId() == StudentId) {
+                student1.setStudentId(StudentId);
                 student1.setStudentName(student.getStudentName());
                 student1.setRoomNo(student.getRoomNo());
-
+                student1.setAddress(student.getAddress());
                 break;
             }
         }
