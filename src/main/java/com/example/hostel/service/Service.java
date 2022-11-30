@@ -84,7 +84,12 @@ public class Service implements ServiceImpl {
     }
 
 
-
+    /**
+     *
+     * @param StudentId
+     * @return Status of deletion
+     * @throws InvalidEntryException
+     */
     @Override
     public String deleteStudentInfo(int StudentId) {
         for (StudentInfo student : studentList) {
@@ -98,7 +103,12 @@ public class Service implements ServiceImpl {
         return "Successfully deleted ";
     }
 
-
+    /**
+     *
+     * @param StudentId
+     * @param student
+     * @return status of update
+     */
     public String updateStudentInfo(int StudentId, StudentInfo student) {
 
         for (StudentInfo student1 : studentList) {
