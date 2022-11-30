@@ -24,10 +24,10 @@ public class Service implements ServiceImpl {
     @Autowired
     Validator validation ;
 
-    public String addStudents(StudentInfo student) throws Exception {
+    public String addStudents(StudentInfo student) throws InvalidEntryException, StudentIdNotFoundException {
         StudentInfo studentDetails = new StudentInfo();
 
-        try {
+
             if (!validation.IdValidator(student.getStudentId()))
                 throw new InvalidEntryException("Enter Valid Id");
             studentDetails.setStudentId(student.getStudentId());
@@ -48,18 +48,15 @@ public class Service implements ServiceImpl {
             if (specialCheck(student.getStudentId()))
                 throw new StudentIdNotFoundException("Student ID already present");
 
-        } catch (InvalidEntryException e) {
-            return e.getMessage();
-        } catch (StudentIdNotFoundException e) {
-            return e.getMessage();
-        }
-            studentList.add(studentDetails);
+
+
+        studentList.add(studentDetails);
             return "Student added";
 
         }
 
         @Override
-        public StudentInfo getStudents(int StudentId){
+        public StudentInfo getStudent(int StudentId){
             StudentInfo stud = null;
             for (StudentInfo studentinfo : studentList) {
                 if (studentinfo.getStudentId() == StudentId) {
@@ -68,6 +65,16 @@ public class Service implements ServiceImpl {
                 }
             }
             return stud;
+        }
+        public StudentInfo getStudents(int RoomNo) {
+            StudentInfo stdInfo = null;
+            for (StudentInfo studentInfo : studentList) {
+                if (studentInfo.getRoomNo() == RoomNo) {
+                    stdInfo = studentInfo;
+                    break;
+                }
+            }
+            return stdInfo;
         }
 
 

@@ -23,28 +23,35 @@ public class Controller {
     Logger logger =LoggerFactory.getLogger(Controller.class);
     @PostMapping("student/add")
     private String add(@RequestBody StudentInfo studentInfo) throws Exception{
+        logger.info("Adding student details");
         return service.addStudents(studentInfo);
     }
     @GetMapping("/student")
     private List<StudentInfo> viewAll(){
-        logger.info("[viewAll] info message");
-        logger.warn("[viewAll] warn message");
-        logger.error("[viewAll] error message");
-        logger.trace("[viewAll] trace message");
+        logger.info("displaying all students");
         return service.displayAll();
     }
     @GetMapping("/studentInfo/{studentId}")
-    public StudentInfo getStudents(@PathVariable int studentId){
-        return service.getStudents(studentId);
+    public StudentInfo getStudent(@PathVariable int studentId){
+        logger.info("fetching student data by Id");
+        return service.getStudent(studentId);
+    }
+
+    @GetMapping("/student/{roomNo}")
+    public StudentInfo getStudents(@PathVariable int roomNo){
+        logger.info("fetching student data by RoomNo");
+        return service.getStudents(roomNo);
     }
 
     @PutMapping("/student/{StudentId}")
     public StudentInfo updateStudent(@PathVariable int StudentId, @RequestBody StudentInfo student ) {
+        logger.info("Updating student data");
         return service.updateStudent(StudentId, student);
     }
 
     @DeleteMapping("/student/{StudentId}")
     public StudentInfo deleteStudent(@PathVariable  String StudentId) {
+        logger.info("Deleting student data");
         return service.deleteStudent(Integer.parseInt(StudentId));
     }
 
