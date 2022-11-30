@@ -3,6 +3,7 @@ package com.example.hostel.service;
 import com.example.hostel.Validation.Validator;
 import com.example.hostel.entity.StudentInfo;
 import com.example.hostel.exception.InvalidEntryException;
+import com.example.hostel.exception.StudentIdNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -11,6 +12,11 @@ import java.util.List;
 @org.springframework.stereotype.Service
 public class Service implements ServiceImpl {
     List<StudentInfo> studentList= new ArrayList<>();
+
+    public List<StudentInfo> getStudentList() {
+        return studentList;
+    }
+
     public Service(){
 
     }
@@ -23,12 +29,13 @@ public class Service implements ServiceImpl {
     @Autowired
     Validator validation ;
 
-    public String addStudents(StudentInfo student) throws Exception{
+    public String addStudents(StudentInfo student) {
         StudentInfo studentDetails = new StudentInfo();
 
+            if (specialCheck(student.getStudentId()))
+                throw new StudentIdNotFoundException("StudentId already present");
 
-        try {
-            if (!validation.IdValidator(student.getStudentId()))
+            if (!validation.idValidator(student.getStudentId()))
                 throw new InvalidEntryException("Enter Valid Id");
             studentDetails.setStudentId(student.getStudentId());
 
@@ -44,16 +51,18 @@ public class Service implements ServiceImpl {
                 throw new InvalidEntryException("Enter Valid Address");
             studentDetails.setAddress(student.getAddress());
 
-        }catch (InvalidEntryException e){
-            return e.getMessage();
-        }
+            if (!validation.numberValidator(student.getPhoneNumber()))
+                throw new InvalidEntryException("Enter Valid PhoneNumber");
+            studentDetails.setPhoneNumber(student.getPhoneNumber());
+
+
         studentList.add(studentDetails);
         return "Student added";
 
     }
 
     @Override
-    public StudentInfo getStudents(int StudentId){
+    public StudentInfo getStudent(int StudentId){
         StudentInfo stud= null;
         for (StudentInfo studentinfo: studentList){
             if (studentinfo.getStudentId()==StudentId){
@@ -62,6 +71,16 @@ public class Service implements ServiceImpl {
             }
         }
         return stud;
+    }
+    public StudentInfo getStudents(int RoomNo){
+        StudentInfo studInfo= null;
+        for (StudentInfo studentInfo: studentList) {
+            if (studentInfo.getRoomNo()==RoomNo){
+                studInfo=studentInfo;
+                break;
+            }
+        }
+        return studInfo;
     }
 
 
@@ -86,12 +105,18 @@ public class Service implements ServiceImpl {
             if (student1.getStudentId() == StudentId) {
                 student1.setStudentName(student.getStudentName());
                 student1.setRoomNo(student.getRoomNo());
-                student1.setAddress(student.getAddress());
                 s = student1;
                 break;
             }
         }
         return s;
+    }
+    public boolean specialCheck(int StudentId) {
+        for (StudentInfo studentInfo : getStudentList()) {
+            if (studentInfo.getStudentId() == StudentId)
+                return true;
+        }
+        return false;
     }
 
 }

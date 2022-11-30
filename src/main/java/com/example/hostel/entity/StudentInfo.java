@@ -7,6 +7,16 @@ public class StudentInfo {
     private int RoomNo;
     private String Address;
 
+    private long PhoneNumber;
+
+    public long getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(long phoneNumber) {
+        PhoneNumber = phoneNumber;
+    }
+
     public String getAddress() {
         return Address;
     }
@@ -39,11 +49,12 @@ public class StudentInfo {
         RoomNo = roomNo;
     }
 
-    public StudentInfo(int studentId, String studentName, int roomNo, String address) {
+    public StudentInfo(int studentId, String studentName, int roomNo, String address, long phoneNumber) {
         StudentId = studentId;
         StudentName = studentName;
         RoomNo = roomNo;
         Address = address;
+        PhoneNumber = phoneNumber;
     }
 
     public StudentInfo() {
@@ -56,6 +67,7 @@ public class StudentInfo {
                 ", StudentName='" + StudentName + '\'' +
                 ", RoomNo=" + RoomNo +
                 ", Address='" + Address + '\'' +
+                ", PhoneNumber=" + PhoneNumber +
                 '}';
     }
 }
