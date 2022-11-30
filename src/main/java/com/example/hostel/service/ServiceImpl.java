@@ -9,6 +9,6 @@ public interface ServiceImpl {
     List<StudentInfo> displayAll();
    StudentInfo getStudents(int StudentId);
 
-    StudentInfo deleteStudent(int StudentId);
-    StudentInfo updateStudent(int StudentId, StudentInfo student);
+    String deleteStudentInfo(int StudentId);
+    String updateStudentInfo(int StudentId, StudentInfo student);
 }
