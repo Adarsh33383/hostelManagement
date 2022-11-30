@@ -86,7 +86,7 @@ public class Service implements ServiceImpl {
 
 
     @Override
-    public StudentInfo deleteStudent(int StudentId) {
+    public String deleteStudentInfo(int StudentId) {
         StudentInfo st = null;
         for (StudentInfo student : studentList) {
             if (student.getStudentId() == StudentId) {
@@ -95,21 +95,21 @@ public class Service implements ServiceImpl {
                 break;
             }
         }
-        return st;
+        return "Successfully deleted ";
     }
 
 
-    public StudentInfo updateStudent(int StudentId, StudentInfo student) {
-        StudentInfo s = null;
+    public String updateStudentInfo(int StudentId, StudentInfo student) {
+
         for (StudentInfo student1 : studentList) {
             if (student1.getStudentId() == StudentId) {
                 student1.setStudentName(student.getStudentName());
                 student1.setRoomNo(student.getRoomNo());
-                s = student1;
+
                 break;
             }
         }
-        return s;
+      return "Successfully Updates StudentInfo";
     }
     public boolean specialCheck(int StudentId) {
         for (StudentInfo studentInfo : getStudentList()) {
