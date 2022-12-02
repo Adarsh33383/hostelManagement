@@ -14,9 +14,9 @@ public class GlobalExceptionHandler {
         return new ErrorResponse(HttpStatus.NOT_FOUND.value(), e.getMessage());
     }
 
-    @ExceptionHandler(value = StudentIdNotFoundException.class)
+    @ExceptionHandler(value = StudentIdAlreadyPresentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody ErrorResponse StudentIdNotFoundException(StudentIdNotFoundException e) {
+    public @ResponseBody ErrorResponse StudentIdNotFoundException(StudentIdAlreadyPresentException e) {
         return new ErrorResponse(HttpStatus.NOT_FOUND.value(), e.getMessage());
     }
 }

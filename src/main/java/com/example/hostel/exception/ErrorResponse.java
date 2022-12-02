@@ -4,7 +4,7 @@ public class ErrorResponse {
     private int msgCode;
     private String msg;
 
-    public ErrorResponse(){
+    public ErrorResponse() {
 
     }
 

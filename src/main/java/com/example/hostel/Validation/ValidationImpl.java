@@ -1,5 +1,6 @@
 package com.example.hostel.Validation;
 
+import com.example.hostel.exception.InvalidEntryException;
 import com.example.hostel.service.Service;
 import org.springframework.stereotype.Component;
 
@@ -8,30 +9,39 @@ public class ValidationImpl implements Validator {
     Service service = new Service();
 
     @Override
-    public boolean idValidator(int StudentId) {
-        return StudentId > 0;
+    public int idValidator(int StudentId) {
+        if (StudentId < 0)
+            throw new InvalidEntryException("Enter valid StudentId");
+        return StudentId;
     }
 
     @Override
-    public boolean nameValidator(String StudentName) {
-        return StudentName.length() >= 3;
+    public String nameValidator(String StudentName) {
+        if (StudentName.length() < 3)
+            throw new InvalidEntryException("Enter Valid Name");
+        return StudentName;
     }
 
     @Override
-    public boolean roomsValidator(int RoomNo) {
-        return RoomNo > 0;
-
+    public int roomsValidator(int RoomNo) {
+        if (RoomNo < 0)
+            throw new InvalidEntryException("Enter Valid Room Number");
+        return RoomNo;
     }
 
     @Override
-    public boolean addressValidator(String address) {
-        return address.matches("[A-Za-z]{3,20}$");
+    public String addressValidator(String address) {
+        if (!(address.matches("[A-Za-z]{3,20}$")))
+            throw new InvalidEntryException("Enter Valid Address");
+        return address;
     }
 
     @Override
-    public boolean numberValidator(long number) {
+    public long numberValidator(long number) {
         String numStr = String.valueOf(number);
-        return numStr.length() == 10;
+        if (numStr.length() != 10)
+            throw new InvalidEntryException("Enter Valid PhoneNumber");
+        return number;
     }
 
 }

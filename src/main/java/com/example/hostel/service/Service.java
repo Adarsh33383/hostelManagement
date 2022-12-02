@@ -2,8 +2,8 @@ package com.example.hostel.service;
 
 import com.example.hostel.Validation.Validator;
 import com.example.hostel.entity.StudentInfo;
-import com.example.hostel.exception.InvalidEntryException;
-import com.example.hostel.exception.StudentIdNotFoundException;
+import com.example.hostel.exception.StudentIdAlreadyPresentException;
+import com.example.hostel.exception.StudentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -11,78 +11,59 @@ import java.util.List;
 
 @org.springframework.stereotype.Service
 public class Service implements ServiceImpl {
-    List<StudentInfo> studentList= new ArrayList<>();
+    List<StudentInfo> studentList = new ArrayList<>();
 
     public List<StudentInfo> getStudentList() {
         return studentList;
     }
-
-    public Service(){
-
-    }
-    @Override
-    public List<StudentInfo> displayAll() {
-        return studentList;
+    public Service() {
     }
 
     StudentInfo student = new StudentInfo();
     @Autowired
-    Validator validation ;
+    Validator validation;
 
     public String addStudents(StudentInfo student) {
         StudentInfo studentDetails = new StudentInfo();
 
-            if (specialCheck(student.getStudentId()))
-                throw new StudentIdNotFoundException("StudentId already present");
-
-            if (!validation.idValidator(student.getStudentId()))
-                throw new InvalidEntryException("Enter Valid Id");
-            studentDetails.setStudentId(student.getStudentId());
-
-            if (!validation.nameValidator(student.getStudentName()))
-                throw new InvalidEntryException("Enter Valid Name");
-            studentDetails.setStudentName(student.getStudentName());
-
-            if (!validation.roomsValidator(student.getRoomNo()))
-                throw new InvalidEntryException("Enter Valid Room Number");
-            studentDetails.setRoomNo(student.getRoomNo());
-
-            if (!validation.addressValidator(student.getAddress()))
-                throw new InvalidEntryException("Enter Valid Address");
-            studentDetails.setAddress(student.getAddress());
-
-            if (!validation.numberValidator(student.getPhoneNumber()))
-                throw new InvalidEntryException("Enter Valid PhoneNumber");
-            studentDetails.setPhoneNumber(student.getPhoneNumber());
-
-
+        specialCheck(student.getStudentId());
+        studentDetails.setStudentId(validation.idValidator(student.getStudentId()));
+        studentDetails.setStudentName(validation.nameValidator(student.getStudentName()));
+        studentDetails.setRoomNo(validation.roomsValidator(student.getRoomNo()));
+        studentDetails.setAddress(validation.addressValidator(student.getAddress()));
+        studentDetails.setPhoneNumber(validation.numberValidator(student.getPhoneNumber()));
         studentList.add(studentDetails);
         return "Student added";
-
+    }
+    @Override
+    public List<StudentInfo> displayAll() {
+        if (studentList.size()==0){
+            throw new StudentNotFoundException("No students present in list");
+        }
+        return studentList;
     }
 
     @Override
-    public StudentInfo getStudent(int StudentId){
-        StudentInfo stud= null;
-        for (StudentInfo studentinfo: studentList){
-            if (studentinfo.getStudentId()==StudentId){
-                stud=studentinfo;
-                break;
+    public StudentInfo getStudent(int StudentId) {
+        for (StudentInfo studentinfo : studentList) {
+            if (studentinfo.getStudentId() == StudentId) {
+
+                return studentinfo;
             }
         }
-        return stud;
-    }
-    public StudentInfo getStudents(int RoomNo){
-        StudentInfo studInfo= null;
-        for (StudentInfo studentInfo: studentList) {
-            if (studentInfo.getRoomNo()==RoomNo){
-                studInfo=studentInfo;
-                break;
-            }
-        }
-        return studInfo;
+        throw new StudentNotFoundException("Student not present in list"+ StudentId);
+
     }
 
+    public StudentInfo getStudents(int RoomNo) {
+        for (StudentInfo studentInfo : studentList) {
+            if (studentInfo.getRoomNo() == RoomNo) {
+                return studentInfo;
+            }
+        }
+        throw new StudentNotFoundException("Student not present in list"+ RoomNo);
+
+    }
 
 
     @Override
@@ -90,34 +71,38 @@ public class Service implements ServiceImpl {
         StudentInfo st = null;
         for (StudentInfo student : studentList) {
             if (student.getStudentId() == StudentId) {
-                st = student ;
-                studentList.remove(student);
-                break;
+                st = student;
+
             }
         }
+        if (st==null){
+            throw new StudentNotFoundException("Student not found");
+        }
+        studentList.remove(st);
         return st;
     }
 
 
     public StudentInfo updateStudent(int StudentId, StudentInfo student) {
-        StudentInfo s = null;
+       validation.idValidator(StudentId);
         for (StudentInfo student1 : studentList) {
             if (student1.getStudentId() == StudentId) {
-                student1.setStudentName(student.getStudentName());
-                student1.setRoomNo(student.getRoomNo());
-                s = student1;
-                break;
+                student1.setStudentId(validation.idValidator(student.getStudentId()));
+                student1.setStudentName(validation.nameValidator(student.getStudentName()));
+                student1.setRoomNo(validation.roomsValidator(student.getRoomNo()));
+                student1.setPhoneNumber(validation.numberValidator(student.getPhoneNumber()));
+                student1.setAddress(validation.addressValidator(student.getAddress()));
+                return student;
             }
         }
-        return s;
-    }
-    public boolean specialCheck(int StudentId) {
-        for (StudentInfo studentInfo : getStudentList()) {
-            if (studentInfo.getStudentId() == StudentId)
-                return true;
-        }
-        return false;
+        throw new StudentNotFoundException("Student not found");
     }
 
+    public void specialCheck(int StudentId) {
+        for (StudentInfo studentInfo : getStudentList()) {
+            if (studentInfo.getStudentId() == StudentId)
+                throw new StudentIdAlreadyPresentException("StudentId already present");
+        }
+    }
 }
 

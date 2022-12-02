@@ -1,16 +1,19 @@
 package com.example.hostel.Validation;
 
 import org.springframework.stereotype.Component;
+
 @Component
 public interface Validator {
 
-          public boolean idValidator(int StudentId);
-        public boolean nameValidator(String StudentName);
+    public int idValidator(int StudentId);
 
-        public boolean roomsValidator(int RoomNo);
-       public boolean addressValidator(String Address);
+    public String nameValidator(String StudentName);
 
-       public boolean numberValidator(long PhoneNumber);
+    public int roomsValidator(int RoomNo);
+
+    public String addressValidator(String Address);
+
+    public long numberValidator(long PhoneNumber);
 
 
-    }
+}
