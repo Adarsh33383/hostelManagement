@@ -10,7 +10,7 @@ public class ValidationImpl implements Validator {
 
     @Override
     public int idValidator(int StudentId) {
-        if (StudentId < 0)
+        if (StudentId < 1)
             throw new InvalidEntryException("Enter valid StudentId");
         return StudentId;
     }
@@ -24,7 +24,7 @@ public class ValidationImpl implements Validator {
 
     @Override
     public int roomsValidator(int RoomNo) {
-        if (RoomNo < 0)
+        if (RoomNo < 1)
             throw new InvalidEntryException("Enter Valid Room Number");
         return RoomNo;
     }

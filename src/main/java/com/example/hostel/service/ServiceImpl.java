@@ -13,7 +13,7 @@ public interface ServiceImpl {
 
     StudentInfo getStudents(int RoomNo);
 
-    StudentInfo deleteStudent(int StudentId);
+    String deleteStudent(int StudentId);
 
     StudentInfo updateStudent(int StudentId, StudentInfo student);
 }

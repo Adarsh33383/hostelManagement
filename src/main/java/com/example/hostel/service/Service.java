@@ -16,6 +16,7 @@ public class Service implements ServiceImpl {
     public List<StudentInfo> getStudentList() {
         return studentList;
     }
+
     public Service() {
     }
 
@@ -25,7 +26,6 @@ public class Service implements ServiceImpl {
 
     public String addStudents(StudentInfo student) {
         StudentInfo studentDetails = new StudentInfo();
-
         specialCheck(student.getStudentId());
         studentDetails.setStudentId(validation.idValidator(student.getStudentId()));
         studentDetails.setStudentName(validation.nameValidator(student.getStudentName()));
@@ -35,25 +35,27 @@ public class Service implements ServiceImpl {
         studentList.add(studentDetails);
         return "Student added";
     }
+
+
     @Override
     public List<StudentInfo> displayAll() {
-        if (studentList.size()==0){
+        if (studentList.size() == 0) {
             throw new StudentNotFoundException("No students present in list");
         }
         return studentList;
     }
 
+
     @Override
     public StudentInfo getStudent(int StudentId) {
         for (StudentInfo studentinfo : studentList) {
             if (studentinfo.getStudentId() == StudentId) {
-
                 return studentinfo;
             }
         }
-        throw new StudentNotFoundException("Student not present in list"+ StudentId);
-
+        throw new StudentNotFoundException("Student not present in list " + StudentId);
     }
+
 
     public StudentInfo getStudents(int RoomNo) {
         for (StudentInfo studentInfo : studentList) {
@@ -61,30 +63,28 @@ public class Service implements ServiceImpl {
                 return studentInfo;
             }
         }
-        throw new StudentNotFoundException("Student not present in list"+ RoomNo);
-
+        throw new StudentNotFoundException("Student not present in list " + RoomNo);
     }
 
 
     @Override
-    public StudentInfo deleteStudent(int StudentId) {
-        StudentInfo st = null;
+    public String deleteStudent(int StudentId) {
+        StudentInfo studentInfo = null;
         for (StudentInfo student : studentList) {
             if (student.getStudentId() == StudentId) {
-                st = student;
-
+                studentInfo = student;
             }
         }
-        if (st==null){
+        if (studentInfo == null) {
             throw new StudentNotFoundException("Student not found");
         }
-        studentList.remove(st);
-        return st;
+        studentList.remove(studentInfo);
+        return studentInfo + " :Student deleted.";
     }
 
 
     public StudentInfo updateStudent(int StudentId, StudentInfo student) {
-       validation.idValidator(StudentId);
+        validation.idValidator(StudentId);
         for (StudentInfo student1 : studentList) {
             if (student1.getStudentId() == StudentId) {
                 student1.setStudentId(validation.idValidator(student.getStudentId()));
@@ -97,6 +97,7 @@ public class Service implements ServiceImpl {
         }
         throw new StudentNotFoundException("Student not found");
     }
+
 
     public void specialCheck(int StudentId) {
         for (StudentInfo studentInfo : getStudentList()) {

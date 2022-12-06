@@ -28,33 +28,33 @@ public class Controller {
         return service.addStudents(studentInfo);
     }
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/student")
+    @GetMapping("/students")
     private List<StudentInfo> viewAll() {
         logger.info("displaying all students");
         return service.displayAll();
     }
     @ResponseStatus(HttpStatus.FOUND)
-    @GetMapping("/studentInfo/{studentId}")
-    public StudentInfo getStudent(@PathVariable int studentId) {
+    @GetMapping("/student/studentId/{studentId}")
+    private StudentInfo getStudent(@PathVariable int studentId) {
         logger.info("fetching student data by Id");
         return service.getStudent(studentId);
     }
 
     @ResponseStatus(HttpStatus.FOUND)
-    @GetMapping("/student/{roomNo}")
-    public StudentInfo getStudents(@PathVariable int roomNo) {
+    @GetMapping("/student/roomNo/{roomNo}")
+    private StudentInfo getStudents(@PathVariable int roomNo) {
         logger.info("fetching student data by RoomNo");
         return service.getStudents(roomNo);
     }
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/student/{StudentId}")
-    public StudentInfo updateStudent(@PathVariable int StudentId, @RequestBody StudentInfo student) {
+    @PutMapping("/student/studentId/{StudentId}")
+    private StudentInfo updateStudent(@PathVariable int StudentId, @RequestBody StudentInfo student) {
         logger.info("Updating student data");
         return service.updateStudent(StudentId, student);
     }
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @DeleteMapping("/student/{StudentId}")
-    public StudentInfo deleteStudent(@PathVariable String StudentId) {
+    @DeleteMapping("/student/studentId/{StudentId}")
+    private String deleteStudent(@PathVariable String StudentId) {
         logger.info("Deleting student data");
         return service.deleteStudent(Integer.parseInt(StudentId));
     }

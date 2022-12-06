@@ -4,20 +4,6 @@ public class ErrorResponse {
     private int msgCode;
     private String msg;
 
-    public ErrorResponse() {
-
-    }
-
-    public ErrorResponse(int msgCode, String msg) {
-        this.msgCode = msgCode;
-        this.msg = msg;
-    }
-
-    public ErrorResponse(String msg) {
-        super();
-        this.msg = msg;
-    }
-
     public int getMsgCode() {
         return msgCode;
     }
@@ -32,5 +18,13 @@ public class ErrorResponse {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    @Override
+    public String toString() {
+        return "ErrorResponse{" +
+                "msgCode=" + msgCode +
+                ", msg='" + msg + '\'' +
+                '}';
     }
 }
