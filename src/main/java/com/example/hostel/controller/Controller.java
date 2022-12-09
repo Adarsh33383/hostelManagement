@@ -35,16 +35,16 @@ public class Controller {
     }
     @ResponseStatus(HttpStatus.FOUND)
     @GetMapping("/student/studentId/{studentId}")
-    private StudentInfo getStudent(@PathVariable int studentId) {
+    private StudentInfo getStudentById(@PathVariable int studentId) {//todo
         logger.info("fetching student data by Id");
-        return service.getStudent(studentId);
+        return service.getStudentById(studentId);
     }
 
     @ResponseStatus(HttpStatus.FOUND)
     @GetMapping("/student/roomNo/{roomNo}")
-    private StudentInfo getStudents(@PathVariable int roomNo) {
+    private List<StudentInfo> getStudentByRoomNo(@PathVariable int roomNo) {
         logger.info("fetching student data by RoomNo");
-        return service.getStudents(roomNo);
+        return service.getStudentByRoomNo(roomNo);
     }
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/student/studentId/{StudentId}")

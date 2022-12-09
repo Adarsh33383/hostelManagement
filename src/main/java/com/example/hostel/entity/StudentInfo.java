@@ -2,72 +2,72 @@ package com.example.hostel.entity;
 
 public class StudentInfo {
 
-    private int StudentId;
-    private String StudentName;
-    private int RoomNo;
-    private String Address;
+    private int studentId;
+    private String studentName;
+    private int roomNo;
+    private String address;
 
-    private long PhoneNumber;
-
-    public long getPhoneNumber() {
-        return PhoneNumber;
-    }
-
-    public void setPhoneNumber(long phoneNumber) {
-        PhoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return Address;
-    }
-
-    public void setAddress(String address) {
-        Address = address;
-    }
+    private long phoneNumber;
 
     public int getStudentId() {
-        return StudentId;
+        return studentId;
     }
 
     public void setStudentId(int studentId) {
-        StudentId = studentId;
+        this.studentId = studentId;
     }
 
     public String getStudentName() {
-        return StudentName;
+        return studentName;
     }
 
     public void setStudentName(String studentName) {
-        StudentName = studentName;
+        this.studentName = studentName;
     }
 
     public int getRoomNo() {
-        return RoomNo;
+        return roomNo;
     }
 
     public void setRoomNo(int roomNo) {
-        RoomNo = roomNo;
+        this.roomNo = roomNo;
     }
 
-    public StudentInfo(int studentId, String studentName, int roomNo, String address, long phoneNumber) {
-        StudentId = studentId;
-        StudentName = studentName;
-        RoomNo = roomNo;
-        Address = address;
-        PhoneNumber = phoneNumber;
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public StudentInfo() {
     }
 
+    public StudentInfo(int studentId, String studentName, int roomNo, String address, long phoneNumber) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.roomNo = roomNo;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
+
     @Override
     public String toString() {
         return "StudentInfo{" +
-                "StudentId=" + StudentId +
-                ", StudentName='" + StudentName + '\'' +
-                ", RoomNo=" + RoomNo +
-                ", Address='" + Address + '\'' +
-                ", PhoneNumber=" + PhoneNumber +
+                "studentId=" + studentId +
+                ", studentName='" + studentName + '\'' +
+                ", roomNo=" + roomNo +
+                ", address='" + address + '\'' +
+                ", phoneNumber=" + phoneNumber +
                 '}';
     }
 }
