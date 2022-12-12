@@ -46,23 +46,23 @@ class HostelApplicationTest {
     @Test
     @DisplayName("Testing add method")
     void addStudent() {
-     // service.addStudents(studentInfo);
-         service.getStudent(studentInfo.getStudentId());
+     //service.addStudents(studentInfo);
        assertThrows(StudentIdAlreadyPresentException.class,()->service.addStudents(studentInfo),"StudentId already present");
+
     }
     @Test
     @DisplayName("Testing get method")
     void getStudent() {
         // service.addStudents(studentInfo);
-        studentInfo.setStudentId(11);
-        service.getStudent(studentInfo.getStudentId());
+       // service.getStudentById(studentInfo.getStudentId());
         assertThrows(StudentIdAlreadyPresentException.class,()->service.addStudents(studentInfo),"StudentId already present");
 
     }
     @Test
     @DisplayName("Testing update method")
     void updateStudent() {
-     service.addStudents(studentInfo);
+       studentInfo.setStudentId(12);
+       service.addStudents(studentInfo);
       assertThrows(StudentIdAlreadyPresentException.class,()->service.addStudents(studentInfo)," Student Already present");
    }
 
@@ -114,7 +114,7 @@ class HostelApplicationTest {
     @DisplayName("Delete mapping")
   void testControllerDeleteStudent() throws Exception{
        ObjectMapper mapper = new ObjectMapper();
-      //service.addStudent(studentInfo);
+      //service.addStudents(studentInfo);
       service.deleteStudent(studentInfo.getStudentId());
       this.mockMvc.perform(delete("/student/studentId")
                       .contentType(MediaType.APPLICATION_JSON)
