@@ -9,9 +9,9 @@ public interface ServiceImpl {
 
     List<StudentInfo> displayAll();
 
-    StudentInfo getStudent(int StudentId);
+    StudentInfo getStudentById(int StudentId);
 
-    StudentInfo getStudents(int RoomNo);
+    List<StudentInfo> getStudentByRoomNo(int RoomNo);
 
     String deleteStudent(int StudentId);
 

@@ -33,7 +33,7 @@ public class Service implements ServiceImpl {
         studentDetails.setAddress(validation.addressValidator(student.getAddress()));
         studentDetails.setPhoneNumber(validation.numberValidator(student.getPhoneNumber()));
         studentList.add(studentDetails);
-        return "Student added";
+        return studentDetails + "Student added";
     }
 
 
@@ -47,7 +47,7 @@ public class Service implements ServiceImpl {
 
 
     @Override
-    public StudentInfo getStudent(int StudentId) {
+    public StudentInfo getStudentById(int StudentId) {
         for (StudentInfo studentinfo : studentList) {
             if (studentinfo.getStudentId() == StudentId) {
                 return studentinfo;
@@ -57,14 +57,16 @@ public class Service implements ServiceImpl {
     }
 
 
-    public StudentInfo getStudents(int RoomNo) {
+    public List<StudentInfo> getStudentByRoomNo(int RoomNo) {
+        List<StudentInfo> result = new ArrayList<>();
         for (StudentInfo studentInfo : studentList) {
-            if (studentInfo.getRoomNo() == RoomNo) {
-                return studentInfo;
-            }
+            if (studentInfo.getRoomNo() == RoomNo)
+//                return studentInfo; //todo
+                result.add(studentInfo);
+            else throw new StudentNotFoundException("Student not present in list " + RoomNo);
         }
-        throw new StudentNotFoundException("Student not present in list " + RoomNo);
-    }
+        return result;
+}
 
 
     @Override
