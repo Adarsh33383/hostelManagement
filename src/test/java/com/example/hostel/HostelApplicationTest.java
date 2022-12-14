@@ -9,7 +9,6 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,23 +45,36 @@ class HostelApplicationTest {
     @Test
     @DisplayName("Testing add method")
     void addStudent() {
-     //service.addStudents(studentInfo);
+        studentInfo.setStudentId(10);
+        studentInfo.setStudentName("sakshi");
+        studentInfo.setRoomNo(101);
+        studentInfo.setPhoneNumber(3456789765L);
+        studentInfo.setAddress("pune");
+        service.addStudents(studentInfo);
        assertThrows(StudentIdAlreadyPresentException.class,()->service.addStudents(studentInfo),"StudentId already present");
 
     }
     @Test
     @DisplayName("Testing get method")
     void getStudent() {
-        // service.addStudents(studentInfo);
-       // service.getStudentById(studentInfo.getStudentId());
+        studentInfo.setStudentId(14);
+        studentInfo.setStudentName("sakshi");
+        studentInfo.setRoomNo(101);
+        studentInfo.setPhoneNumber(3456789765L);
+        studentInfo.setAddress("pune");
+        service.addStudents(studentInfo);
         assertThrows(StudentIdAlreadyPresentException.class,()->service.addStudents(studentInfo),"StudentId already present");
 
     }
     @Test
     @DisplayName("Testing update method")
     void updateStudent() {
-       studentInfo.setStudentId(12);
-       service.addStudents(studentInfo);
+        studentInfo.setStudentId(13);
+        studentInfo.setStudentName("sakshi");
+        studentInfo.setRoomNo(101);
+        studentInfo.setPhoneNumber(3456789765L);
+        studentInfo.setAddress("pune");
+        service.addStudents(studentInfo);
       assertThrows(StudentIdAlreadyPresentException.class,()->service.addStudents(studentInfo)," Student Already present");
    }
 
@@ -99,9 +111,12 @@ class HostelApplicationTest {
   @DisplayName("put mapping")
   void testControllerUpdateStudent() throws Exception{
       ObjectMapper mapper= new ObjectMapper();
-    // service.addStudents(studentInfo);
-      studentInfo.setStudentId(11);
-      studentInfo.setStudentName("Mishu");
+       studentInfo.setStudentId(12);
+       studentInfo.setStudentName("sakshi");
+       studentInfo.setRoomNo(101);
+       studentInfo.setPhoneNumber(3456789765L);
+       studentInfo.setAddress("pune");
+       service.addStudents(studentInfo);
      service.updateStudent(studentInfo.getStudentId(),studentInfo);
       this.mockMvc.perform(put("/student/studentId")
                      .contentType(MediaType.APPLICATION_JSON)
@@ -114,8 +129,13 @@ class HostelApplicationTest {
     @DisplayName("Delete mapping")
   void testControllerDeleteStudent() throws Exception{
        ObjectMapper mapper = new ObjectMapper();
-      //service.addStudents(studentInfo);
-      service.deleteStudent(studentInfo.getStudentId());
+       studentInfo.setStudentId(15);
+      studentInfo.setStudentName("sakshi");
+      studentInfo.setRoomNo(101);
+      studentInfo.setPhoneNumber(3456789765L);
+      studentInfo.setAddress("pune");
+      service.addStudents(studentInfo);
+     service.deleteStudent(studentInfo.getStudentId());
       this.mockMvc.perform(delete("/student/studentId")
                       .contentType(MediaType.APPLICATION_JSON)
                       .contentType(mapper.writeValueAsString(studentInfo.getStudentId())))
